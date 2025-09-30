@@ -1,0 +1,8 @@
+
+
+class WalletService:
+    pass
+
+
+
+
