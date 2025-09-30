@@ -1,6 +1,5 @@
 
 
-
 class WalletService:
     pass
 
