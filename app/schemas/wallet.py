@@ -6,7 +6,10 @@ from sqlalchemy import DateTime
 
 
 class WalletBase(BaseModel):
-    model_config = {"from_attributes": True}
+    model_config = {
+        "from_attributes": True,
+        "arbitrary_types_allowed": True,
+    }
 
 
 class WalletRead(WalletBase):

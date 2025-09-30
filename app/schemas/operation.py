@@ -20,7 +20,10 @@ class OperationBase(BaseModel):
         example="100.00",
     )
 
-    model_config = {"from_attributes": True}
+    model_config = {
+        "from_attributes": True,
+        "arbitrary_types_allowed": True,
+    }
 
 
 class OperationCreate(OperationBase):

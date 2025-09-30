@@ -2,7 +2,7 @@ import logging
 
 from fastapi import FastAPI
 
-from config import settings
+from app.config import settings
 from app.api.v1.routes import router
 from app.db.base import DBConnectionManager
 
@@ -35,4 +35,4 @@ def create_app() -> FastAPI:
     return app
 
 
-
+app = create_app()

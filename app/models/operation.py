@@ -14,7 +14,7 @@ from sqlalchemy.dialects.postgresql import UUID as PG_UUID
 
 from uuid import UUID, uuid4
 
-from enums import OperationType
+from app.models.enums import OperationType
 from app.db.base import Base
 
 
