@@ -1,10 +1,10 @@
 import logging
 
 from fastapi import FastAPI
-from sqlalchemy.ext.asyncio import g
 
 from config import settings
 from app.api.v1.routes import router
+from app.db.base import DBConnectionManager
 
 
 log = logging.getLogger("uvicorn.error")
@@ -24,12 +24,11 @@ def create_app() -> FastAPI:
 
     @app.on_event("shutdown")
     async def on_shutdown() -> None:
-        log.info("Shutting down application '%s'...", title)
-        engine = await get_async_engine()
-        await engine.dispose()
+        log.info("Shutting down application.")
+        await DBConnectionManager.dispose_engine()
         log.info("Engine disposed.")
 
-    @app.get("/", tags=["health"])
+    @app.get("/")
     async def root() -> dict[str, str]:
         return {"status": "ok", "app": title}
 
