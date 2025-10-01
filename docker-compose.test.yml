@@ -30,7 +30,7 @@ services:
       db:
         condition: service_healthy
       web:
-        condition: service_healthy
+        condition: service_started
     volumes:
       - ./:/app
     command: ["bash", "-lc", "pytest -q tests --maxfail=1"]
