@@ -14,7 +14,6 @@ RUN pip install --no-cache-dir poetry \
  && poetry install --no-root --no-interaction --no-ansi --with dev
 
 COPY . /app
-COPY . /tests
 
 COPY docker/run-tests.sh /usr/local/bin/run-tests.sh
 RUN chmod +x /usr/local/bin/run-tests.sh

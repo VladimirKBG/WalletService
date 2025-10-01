@@ -7,8 +7,8 @@ import httpx
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from app.db.base import Base
-from app.models.wallet import Wallet
+from db.base import Base
+from models.wallet import Wallet
 from decimal import Decimal
 from sqlalchemy_utils import create_database, database_exists
 
