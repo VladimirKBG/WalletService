@@ -8,3 +8,4 @@ done
 echo "Database ready"
 
 exec "$@"
+
