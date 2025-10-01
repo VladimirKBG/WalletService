@@ -1,5 +1,6 @@
 from uuid import UUID
 from decimal import Decimal
+from typing import List
 
 from fastapi import Depends
 
@@ -48,6 +49,13 @@ class WalletService:
                 if wallet is None:
                     raise UnrecognizedWalletId
                 return wallet
+
+    async def get_all_wallets(self) -> List[Wallet]:
+        async with await self.db_connection_manager.get_session() as session:
+            async with session.begin():
+                result = await session.execute(select(Wallet))
+                wallets = result.scalars().all()
+                return wallets
 
 
 class InsufficientFundsException(Exception):

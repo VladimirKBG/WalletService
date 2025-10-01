@@ -1,5 +1,5 @@
 from uuid import UUID
-from typing import Annotated
+from typing import Annotated, List
 
 from fastapi import APIRouter, status, Depends, HTTPException
 
@@ -58,5 +58,22 @@ async def get_wallet(
         wallet = await service.get_wallet(wallet_id)
     except UnrecognizedWalletId:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Wallet with id={wallet_id} not found.")
+    else:
+        return WalletRead.model_validate(wallet)
+
+
+@router.get(
+    "/wallets",
+    response_model=List[WalletRead],
+    status_code=status.HTTP_200_OK,
+    summary="Return wallets."
+)
+async def get_wallets(
+        service: Annotated[WalletService, Depends(get_wallet_service)]
+) -> WalletRead:
+    try:
+        wallet = await service.get_all_wallets()
+    except UnrecognizedWalletId:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Wallet's root not found.")
     else:
         return WalletRead.model_validate(wallet)
