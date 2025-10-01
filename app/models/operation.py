@@ -6,6 +6,7 @@ from sqlalchemy import (
     Numeric,
     DateTime,
     func,
+    CheckConstraint,
 )
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
@@ -20,6 +21,9 @@ from app.db.base import Base
 
 class Operation(Base):
     __tablename__ = "operations"
+    __table_args__ = (
+        CheckConstraint("amount > 0", name="ck_operation_amount_positive"),
+    )
 
     id: Mapped[UUID] = mapped_column(
         PG_UUID(as_uuid=True),

@@ -12,8 +12,10 @@ from decimal import Decimal
 from uuid import uuid4, UUID
 from sqlalchemy.dialects.postgresql import UUID as PG_UUID
 
+from app.db.base import Base
 
-class Wallet:
+
+class Wallet(Base):
     __tablename__ = "wallets"
     __table_args__ = (
         CheckConstraint("balance >= 0", name="ck_wallets_balance_non_negative"),
