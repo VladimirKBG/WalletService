@@ -42,12 +42,12 @@ class DBConnectionManager:
 
     @classmethod
     async def get_session(cls):
-        async with cls._async_session as session:
+        async with cls._async_session() as session:
             yield session
 
     @classmethod
     async def execute(cls, func):
-        async with cls._async_session as session:
+        async with cls._async_session() as session:
             async with session.begin():
                 await func(session)
 
