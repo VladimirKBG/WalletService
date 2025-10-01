@@ -1,6 +1,8 @@
 services:
   db:
     image: postgres:17
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER: wallet_user
       POSTGRES_PASSWORD: 1234
@@ -12,7 +14,9 @@ services:
       retries: 10
 
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     depends_on:
       db:
         condition: service_healthy
@@ -23,4 +27,10 @@ services:
       - "8000:8000"
     volumes:
       - ./:/app
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:8000/ || exit 1" ]
+      interval: 3s
+      timeout: 2s
+      retries: 10
     command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4"]
+

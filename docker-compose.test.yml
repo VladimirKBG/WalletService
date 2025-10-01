@@ -1,13 +1,30 @@
 services:
   db:
-    volumes:
-      - type: tmpfs
-        target: /var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+    environment:
+      POSTGRES_DB: test_db
 
   web:
+    build:
+      context: .
+      dockerfile: Dockerfile
     environment:
+      DATABASE_URL: "postgresql+asyncpg://wallet_user:1234@db:5432/test_db"
       MODE: "test"
     ports:
       - "8000:8000"
+
+  test-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    environment:
+      DATABASE_URL: "postgresql+asyncpg://wallet_user:wallet_pass@db:5432/test_db"
+      TEST_DATABASE_URL: "postgresql://wallet_user:wallet_pass@db:5432/test_db"
+    depends_on:
+      db:
+        condition: service_healthy
+      web:
+        condition: service_healthy
+    volumes:
+      - ./:/app
+    command: ["bash", "-lc", "pytest -q tests --maxfail=1"]

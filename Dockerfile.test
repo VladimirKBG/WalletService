@@ -1,0 +1,22 @@
+FROM python:3.13-slim
+
+ENV PYTHONUNBUFFERED=1
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends build-essential libpq-dev gcc postgresql-client dos2unix \
+  && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY pyproject.toml poetry.lock* /app/
+RUN pip install --no-cache-dir poetry \
+ && poetry config virtualenvs.create false \
+ && poetry install --no-root --no-interaction --no-ansi --with dev
+
+COPY . /app
+
+COPY docker/run-tests.sh /usr/local/bin/run-tests.sh
+RUN chmod +x /usr/local/bin/run-tests.sh
+
+ENTRYPOINT ["/usr/local/bin/run-tests.sh"]
+CMD ["pytest", "-q"]
