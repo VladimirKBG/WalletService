@@ -24,6 +24,7 @@ services:
       context: .
       dockerfile: Dockerfile.test
     environment:
+      PYTHONPATH: "/app"
       DATABASE_URL: "postgresql+asyncpg://wallet_user:1234@db:5432/test_db"
       TEST_DATABASE_URL: "postgresql://wallet_user:1234@db:5432/test_db"
     working_dir: /app
