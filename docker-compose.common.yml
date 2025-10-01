@@ -28,7 +28,7 @@ services:
     volumes:
       - ./:/app
     healthcheck:
-      test: [ "CMD-SHELL", "curl -f http://localhost:8000/ || exit 1" ]
+      test: [ "CMD-SHELL", "curl -f http://web:8000/ || exit 1" ]
       interval: 3s
       timeout: 2s
       retries: 10
