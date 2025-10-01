@@ -34,7 +34,7 @@ class WalletService:
                     wallet.balance += amount
                 else:
                     raise UnsupportedOperationException
-                operation = await crud_op.create_operation(session, wallet.id, op.operation_type, op.amount)
+                operation = await crud_op.create_operation(session, wallet.id, op_type, abs(amount))
                 await session.flush()
                 return operation
 
@@ -66,4 +66,3 @@ async def get_wallet_service(
     db_conn_manager: DBConnectionManager = Depends(DBConnectionManager),
 ) -> WalletService:
     return WalletService(db_connection_manager=db_conn_manager)
-
