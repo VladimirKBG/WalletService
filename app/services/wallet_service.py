@@ -21,7 +21,7 @@ class WalletService:
             amount: Decimal,
             op_type: OperationType,
     ) -> Operation:
-        async with self.db_connection_manager.get_session() as session:
+        async with await self.db_connection_manager.get_session() as session:
             async with session.begin():
                 wallet = await crud_wallet.get_wallet_for_update(session, wallet_id)
                 if wallet is None:
@@ -42,7 +42,7 @@ class WalletService:
             self,
             wallet_id: UUID,
     ) -> Wallet:
-        async with self.db_connection_manager.get_session() as session:
+        async with await self.db_connection_manager.get_session() as session:
             async with session.begin():
                 wallet = await crud_wallet.read_wallet(session, wallet_id)
                 if wallet is None:
