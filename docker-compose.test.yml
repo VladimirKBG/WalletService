@@ -2,6 +2,11 @@ services:
   db:
     environment:
       POSTGRES_DB: test_db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wallet_user -d test_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   web:
     build:
@@ -12,11 +17,7 @@ services:
       MODE: "test"
     ports:
       - "8000:8000"
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U wallet_user -d test_db" ]
-      interval: 5s
-      timeout: 5s
-      retries: 10
+
 
   test-runner:
     build:
