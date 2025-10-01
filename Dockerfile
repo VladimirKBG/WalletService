@@ -3,7 +3,7 @@ FROM python:3.13-slim
 ENV PYTHONUNBUFFERED=1
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends build-essential libpq-dev postgresql-client \
+    && apt-get install -y --no-install-recommends build-essential libpq-dev postgresql-client dos2unix \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -16,6 +16,7 @@ RUN pip install poetry \
 COPY . /app
 
 COPY ./entrypoint.sh /app/entrypoint.sh
+RUN dos2unix /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
 ENTRYPOINT ["/app/entrypoint.sh"]
