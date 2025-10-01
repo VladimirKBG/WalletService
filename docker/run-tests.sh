@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-WEB_URL="${WEB_URL:-http://localhost:8000/}"
+WEB_URL="http://web:8000/"
 DB_HOST="${DB_HOST:-db}"
 DB_PORT="${DB_PORT:-5432}"
 DB_USER="${POSTGRES_USER:-wallet_user}"
