@@ -1,5 +1,5 @@
 from uuid import UUID
-from typing import Optional
+from typing import Optional, List
 from decimal import Decimal
 
 from sqlalchemy import select, update
@@ -18,6 +18,12 @@ async def read_wallet(session: AsyncSession, wallet_id: UUID) -> Optional[Wallet
     stmt = select(Wallet).where(Wallet.id == wallet_id)
     res = await session.execute(stmt)
     return res.scalar_one_or_none()
+
+
+async def read_all_wallets(session: AsyncSession) -> List[Wallet]:
+    stmt = select(Wallet)
+    res = await session.execute(stmt)
+    return list(res.scalars().all())
 
 
 async def create_wallet(session: AsyncSession, initial_balance: Decimal) -> Wallet:

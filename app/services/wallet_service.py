@@ -53,8 +53,7 @@ class WalletService:
     async def get_all_wallets(self) -> List[Wallet]:
         async with await self.db_connection_manager.get_session() as session:
             async with session.begin():
-                result = await session.execute(select(Wallet))
-                wallets = result.scalars().all()
+                wallets = await crud_wallet.read_all_wallets(session)
                 return wallets
 
 
