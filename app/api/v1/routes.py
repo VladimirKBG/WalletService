@@ -55,7 +55,7 @@ async def get_wallet(
         service: Annotated[WalletService, Depends(get_wallet_service)]
 ) -> WalletRead:
     try:
-        wallet = service.get_wallet(wallet_id)
+        wallet = await service.get_wallet(wallet_id)
     except UnrecognizedWalletId:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Wallet with id={wallet_id} not found.")
     else:
