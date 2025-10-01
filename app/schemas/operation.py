@@ -1,4 +1,5 @@
 from decimal import Decimal, ROUND_HALF_UP
+from datetime import datetime
 
 from pydantic import BaseModel, Field, field_validator
 from uuid import UUID
@@ -46,7 +47,7 @@ class OperationRead(OperationBase):
         example="3c2f2b83-6c8c-4f02-9e5d-1977fd68a271",
     )
 
-    created_at: DateTime = Field(
+    created_at: datetime = Field(
         ...,
         description=f"Date and time of creation of operation (automatically set while DB record creating).",
         example="2025-09-26T17:37:15.123456+03:00",

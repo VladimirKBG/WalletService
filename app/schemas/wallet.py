@@ -1,5 +1,6 @@
 from decimal import Decimal, ROUND_HALF_UP
 from uuid import UUID
+from datetime import datetime
 
 from pydantic import BaseModel, Field, field_validator
 from sqlalchemy import DateTime
@@ -19,13 +20,13 @@ class WalletRead(WalletBase):
         example="9f13d9c0-7db0-4a46-bdf0-148f9a2a5d22",
     )
 
-    created_at: DateTime = Field(
+    created_at: datetime = Field(
         ...,
         description=f"Date and time of creation of wallet (automatically set while DB record creating).",
         example="2025-09-26T17:37:15.123456+03:00",
     )
 
-    updated_at: DateTime = Field(
+    updated_at: datetime = Field(
         ...,
         description=f"Date and time of last wallet's state changing (automatically set while DB record creating).",
         example="2025-09-26T17:37:15.123456+03:00",
