@@ -1,0 +1,13 @@
+services:
+  db:
+    volumes:
+      - type: tmpfs
+        target: /var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  web:
+    environment:
+      MODE: "test"
+    ports:
+      - "8000:8000"

@@ -1,0 +1,14 @@
+services:
+  db:
+    volumes:
+      - prod_db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  web:
+    environment:
+      MODE: "prod"
+    ports:
+      - "8000:8000"
+volumes:
+  prod_db_data:
