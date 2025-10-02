@@ -8,6 +8,7 @@ services:
   web:
     environment:
       MODE: "prod"
+      RUN_MIGRATIONS: True
     ports:
       - "8000:8000"
 volumes:
