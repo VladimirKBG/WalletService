@@ -12,7 +12,8 @@
 - Docker / Docker Compose
 
 ## Установка
-Клонирование проекта: https://github.com/VladimirKBG/WalletService
+- Клонироваnm проект: https://github.com/VladimirKBG/WalletService
+- переименовать файл .env.example в .env
 
 ## Локальный запуск
 <!-- Инструкции по установке зависимостей, запуску сервера без Docker -->

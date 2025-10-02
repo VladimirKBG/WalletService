@@ -64,7 +64,7 @@ class WalletService:
         async with await self.db_connection_manager.get_session() as session:
             async with session.begin():
                 res = await crud_wallet.read_all_wallets(session)
-                return res
+                return res if res else []
 
     async def create_wallet_by_id(self, wallet_id: UUID, initial_balance: Decimal) -> Wallet:
         async with await self.db_connection_manager.get_session() as session:
