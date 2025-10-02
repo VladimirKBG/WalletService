@@ -52,7 +52,7 @@ async def apply_operation(
     status_code=status.HTTP_200_OK,
     summary=f"Get all operations of specified wallet.",
 )
-async def apply_operation(
+async def get_operation(
         wallet_id: UUID,
         service: Annotated[WalletService, Depends(get_wallet_service)]
 ) -> List[OperationRead]:
@@ -105,7 +105,7 @@ async def get_wallets(
     status_code=status.HTTP_200_OK,
     summary="Create wallets with given id."
 )
-async def get_wallet_by_id(
+async def create_wallet_by_id(
         w: WalletCreate,
         service: Annotated[WalletService, Depends(get_wallet_service)],
 ) -> WalletRead:
