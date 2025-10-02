@@ -52,6 +52,9 @@ curl -X GET http://localhost:8000/
 ```bash
 curl -v -X GET http://localhost:8000/api/v1/wallets
 ```
+```PS
+Invoke-RestMethod -Method Get -Uri "http://localhost:8000/api/v1/wallets" -ContentType "application/json"
+```
 
 ### POST /wallets/
 **Описание:** Создание кошелька с указанным id (для демо).
@@ -61,6 +64,10 @@ curl -v -X GET http://localhost:8000/api/v1/wallets
 curl -v -X POST http://localhost:8000/api/v1/wallets \
   -H "Content-Type: application/json" \
   -d '{"id": "00000000-0000-0000-0000-000000000001", "balance": 0}'
+```
+```PS
+$body = @{ id = "00000000-0000-0000-0000-000000000001"; balance = [decimal]0 } | ConvertTo-Json
+Invoke-RestMethod -Method Post -Uri "http://localhost:8000/api/v1/wallets/00000000-0000-0000-0000-000000000001/operation" -ContentType "application/json" -Body $body | ConvertTo-Json -Depth 5
 ```
 
 ### GET /wallets/{wallet-id}
