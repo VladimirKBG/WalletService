@@ -37,7 +37,7 @@ services:
         condition: service_started
     volumes:
       - ./:/app
-    command: ["bash", "-lc", "pytest -q tests --maxfail=1"]
+    command: ["bash", "-lc", "pytest -q tests --maxfail=1 #"]
 
 volumes:
   test_db_data:
