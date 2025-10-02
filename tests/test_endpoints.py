@@ -2,7 +2,6 @@ from uuid import uuid4
 from decimal import Decimal
 
 from app.models.wallet import Wallet
-from app.models.operation import OperationType
 
 
 def test_deposit_and_withdraw_flow(db_session, client):

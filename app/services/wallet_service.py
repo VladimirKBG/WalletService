@@ -91,6 +91,7 @@ class UnrecognizedWalletId(Exception):
 class WalletAlreadyExistException(Exception):
     pass
 
+
 async def get_wallet_service(
     db_conn_manager: DBConnectionManager = Depends(DBConnectionManager),
 ) -> WalletService:

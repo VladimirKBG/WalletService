@@ -3,7 +3,6 @@ from uuid import UUID
 from datetime import datetime
 
 from pydantic import BaseModel, Field, field_validator
-from sqlalchemy import DateTime
 
 
 class WalletBase(BaseModel):

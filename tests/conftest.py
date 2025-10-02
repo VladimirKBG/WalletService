@@ -1,6 +1,5 @@
 import os
 import time
-from uuid import uuid4
 
 import pytest
 import httpx
@@ -8,9 +7,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from app.db.base import Base
-from app.models.wallet import Wallet
-from decimal import Decimal
-from sqlalchemy_utils import create_database, database_exists
+
 
 TEST_DATABASE_URL = os.environ.get("TEST_DATABASE_URL")
 
