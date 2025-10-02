@@ -1,5 +1,6 @@
 from uuid import UUID
 from typing import Annotated, List
+from decimal import  Decimal
 
 from fastapi import APIRouter, status, Depends, HTTPException
 
@@ -77,3 +78,18 @@ async def get_wallets(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Wallet's root not found.")
     else:
         return [WalletRead.model_validate(w) for w in wallets]
+
+
+@router.post(
+    "/wallets",
+    response_model=WalletRead,
+    status_code=status.HTTP_200_OK,
+    summary="Create wallets with given id."
+)
+async def get_wallet_by_id(
+        wallet_id: UUID,
+        initial_balance: Decimal,
+        service: Annotated[WalletService, Depends(get_wallet_service)],
+) -> WalletRead:
+    wallet = await service.create_wallet_by_id(wallet_id, initial_balance)
+    return WalletRead.model_validate(wallet)

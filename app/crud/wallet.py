@@ -35,6 +35,16 @@ async def create_wallet(session: AsyncSession, initial_balance: Decimal) -> Wall
     return wallet
 
 
+async def create_wallet_by_id(session: AsyncSession, wallet_id: UUID, initial_balance: Decimal) -> Wallet:
+    initial_balance = initial_balance.quantize(Decimal("0.01"))
+    wallet = Wallet()
+    wallet.id = wallet_id
+    wallet.balance = initial_balance
+    session.add(wallet)
+    await session.flush()
+    return wallet
+
+
 async def update_wallet_balance(session: AsyncSession, wallet_id: UUID, new_balance: Decimal) -> Optional[UUID]:
     stmt = (
         update(Wallet)

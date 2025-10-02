@@ -56,6 +56,12 @@ class WalletService:
                 res = await crud_wallet.read_all_wallets(session)
                 return res
 
+    async def create_wallet_by_id(self, wallet_id: UUID, initial_balance: Decimal) -> Wallet:
+        async with await self.db_connection_manager.get_session() as session:
+            async with session.begin():
+                wallet = await crud_wallet.create_wallet_by_id(session, wallet_id, initial_balance)
+                return wallet
+
 
 class InsufficientFundsException(Exception):
     pass
