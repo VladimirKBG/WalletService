@@ -91,5 +91,5 @@ curl -v -X POST http://localhost:8000/api/v1/wallets/00000000-0000-0000-0000-000
 
 **Пример запроса:**
 ```bash
-curl -v -X GET http://localhost:8000/api/v1/wallets/00000000-0000-0000-0000-000000000001
+curl -v -X GET http://localhost:8000/api/v1/wallets/00000000-0000-0000-0000-000000000001/operation
 ```
