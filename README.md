@@ -71,8 +71,7 @@ curl -v -X POST http://localhost:8000/api/v1/wallets \
 curl -v -X GET http://localhost:8000/api/v1/wallets/00000000-0000-0000-0000-000000000001
 ```
 ```PS
-$body = @{ id = "00000000-0000-0000-0000-000000000001"; balance = [decimal]0 } | ConvertTo-Json
-Invoke-RestMethod -Method Post -Uri "http://localhost:8000/api/v1/wallets" -ContentType "application/json" -Body $body | ConvertTo-Json -Depth 5
+Invoke-RestMethod -Method Get -Uri "http://localhost:8000/api/v1/wallets/00000000-0000-0000-0000-000000000001/operation" -ContentType "application/json"
 ```
 
 ### POST /wallets/{wallet-id}/operation
