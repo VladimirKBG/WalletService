@@ -25,7 +25,7 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 parsed_url = urlparse(DATABASE_URL)
 if "postgresql" not in parsed_url.scheme.lower():
     raise UnsupportedDBException()
-new_scheme = "postgresql+psycopg[binary]"
+new_scheme = "postgresql+psycopg"
 new_parsed_url = ParseResult(
     scheme=new_scheme,
     netloc=parsed_url.netloc,
