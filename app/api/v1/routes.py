@@ -17,7 +17,7 @@ from app.services.wallet_service import (
 )
 
 
-router = APIRouter(prefix="/api/v1", tags=["operations", "wallets"])
+router = APIRouter(prefix="/api/v1", tags=["wallet_service"])
 
 
 @router.post(
