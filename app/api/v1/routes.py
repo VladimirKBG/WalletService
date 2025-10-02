@@ -70,10 +70,10 @@ async def get_wallet(
 )
 async def get_wallets(
         service: Annotated[WalletService, Depends(get_wallet_service)]
-) -> WalletRead:
+) -> List[WalletRead]:
     try:
-        wallet = await service.get_all_wallets()
+        wallets = await service.get_all_wallets()
     except UnrecognizedWalletId:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Wallet's root not found.")
     else:
-        return WalletRead.model_validate(wallet)
+        return [WalletRead.model_validate(w) for w in wallets]
