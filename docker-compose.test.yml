@@ -2,6 +2,8 @@ services:
   db:
     environment:
       POSTGRES_DB: test_db
+    volumes:
+      - test_db_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U wallet_user -d test_db"]
       interval: 5s
