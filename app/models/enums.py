@@ -8,3 +8,4 @@ class OperationType(str, Enum):
     @classmethod
     def __str__(cls):
         return f"{cls.DEPOSIT} or {cls.WITHDRAW}"
+

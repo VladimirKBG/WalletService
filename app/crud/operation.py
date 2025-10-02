@@ -35,3 +35,4 @@ async def list_operations_by_wallet(
     )
     res = await session.execute(stmt)
     return cast(List[Operation], res.scalars().all())
+

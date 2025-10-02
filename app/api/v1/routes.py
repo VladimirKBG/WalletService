@@ -114,3 +114,4 @@ async def create_wallet_by_id(
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Wallet with id={w.id} is already exist.")
     else:
         return WalletRead.model_validate(wallet)
+

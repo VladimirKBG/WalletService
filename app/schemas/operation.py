@@ -51,3 +51,4 @@ class OperationRead(OperationBase):
         description=f"Date and time of creation of operation (automatically set while DB record creating).",
         example="2025-09-26T17:37:15.123456+03:00",
     )
+

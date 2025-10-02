@@ -14,4 +14,3 @@ if [ "${RUN_MIGRATIONS:-false}" = "true" ]; then
 fi
 
 exec "$@"
-

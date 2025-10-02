@@ -36,3 +36,4 @@ def test_deposit_and_withdraw_flow(db_session, client):
     assert "insufficient" in err["detail"].lower()
     r6 = client.get(f"/api/v1/wallets/{wallet_id}")
     assert float(r6.json()["balance"]) == 70.0
+

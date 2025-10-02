@@ -65,3 +65,4 @@ def client():
 
     with httpx.Client(base_url=base_url, timeout=10.0) as c:
         yield c
+

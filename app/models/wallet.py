@@ -49,3 +49,4 @@ class Wallet(Base):
 
     def __repr__(self) -> str:
         return f"<Wallet id={self.id}, balance={self.balance}>"
+

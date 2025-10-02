@@ -96,3 +96,4 @@ async def get_wallet_service(
     db_conn_manager: DBConnectionManager = Depends(DBConnectionManager),
 ) -> WalletService:
     return WalletService(db_connection_manager=db_conn_manager)
+

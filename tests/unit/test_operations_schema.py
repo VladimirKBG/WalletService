@@ -13,3 +13,4 @@ from app.models.enums import OperationType
 def test_amount_rejects_non_positive(amount):
     with pytest.raises(ValidationError):
         OperationCreate(operation_type=OperationType.DEPOSIT, amount=amount)
+

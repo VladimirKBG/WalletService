@@ -62,3 +62,4 @@ class Operation(Base):
 
     def __repr__(self) -> str:
         return f"<Operation id={self.id}, type={self.operation_type}, amount={self.amount}>"
+

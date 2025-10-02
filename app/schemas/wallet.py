@@ -55,3 +55,4 @@ class WalletCreate(WalletBase):
     @field_validator("amount")
     def _quantize_amount(cls, v: Decimal) -> Decimal:
         return v.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+

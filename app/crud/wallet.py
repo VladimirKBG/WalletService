@@ -69,3 +69,4 @@ async def increment_wallet_balance(session: AsyncSession, wallet_id: UUID, amoun
     await session.flush()
     w_id = res.scalar_one_or_none()
     return w_id
+
