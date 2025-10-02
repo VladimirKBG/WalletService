@@ -5,7 +5,7 @@ from decimal import  Decimal
 from fastapi import APIRouter, status, Depends, HTTPException
 
 from app.schemas.operation import OperationRead, OperationCreate
-from app.schemas.wallet import WalletRead
+from app.schemas.wallet import WalletRead, WalletCreate
 from app.models.enums import OperationType
 from app.services.wallet_service import (
     WalletService,
@@ -87,9 +87,8 @@ async def get_wallets(
     summary="Create wallets with given id."
 )
 async def get_wallet_by_id(
-        wallet_id: UUID,
-        initial_balance: Decimal,
+        w: WalletCreate,
         service: Annotated[WalletService, Depends(get_wallet_service)],
 ) -> WalletRead:
-    wallet = await service.create_wallet_by_id(wallet_id, initial_balance)
+    wallet = await service.create_wallet_by_id(w.id, w.balance)
     return WalletRead.model_validate(wallet)
