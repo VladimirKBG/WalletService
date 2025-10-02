@@ -1,10 +1,14 @@
 import os
 from logging.config import fileConfig
+from urllib.parse import urlparse, urlunparse, ParseResult
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
+
+class UnsupportedDBException(Exception):
+    pass
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -18,8 +22,20 @@ if config.config_file_name is not None:
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-if DATABASE_URL:
-    config.set_main_option("sqlalchemy.url", DATABASE_URL)
+parsed_url = urlparse(DATABASE_URL)
+if "postgresql" not in parsed_url.scheme.lower():
+    raise UnsupportedDBException()
+new_scheme = "postgresql+psycopg2"
+new_parsed_url = ParseResult(
+    scheme=new_scheme,
+    netloc=parsed_url.netloc,
+    path=parsed_url.path,
+    params=parsed_url.params,
+    query=parsed_url.query,
+    fragment=parsed_url.fragment,
+)
+
+config.set_main_option("sqlalchemy.url", urlunparse(new_parsed_url))
 
 # add your model's MetaData object here
 # for 'autogenerate' support
