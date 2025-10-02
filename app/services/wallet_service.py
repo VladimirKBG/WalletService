@@ -39,6 +39,15 @@ class WalletService:
                 await session.flush()
                 return operation
 
+    async def get_all_operations_by_wallet_id(self, wallet_id: UUID) -> List[Operation]:
+        async with await self.db_connection_manager.get_session() as session:
+            async with session.begin():
+                wallet = await crud_wallet.get_wallet_for_update(session, wallet_id)
+                if wallet is None:
+                    raise UnrecognizedWalletId()
+                ops = await crud_op.list_operations_by_wallet(session, wallet_id, 10)
+                return ops
+
     async def get_wallet(
             self,
             wallet_id: UUID,
@@ -59,6 +68,9 @@ class WalletService:
     async def create_wallet_by_id(self, wallet_id: UUID, initial_balance: Decimal) -> Wallet:
         async with await self.db_connection_manager.get_session() as session:
             async with session.begin():
+                wallet = await crud_wallet.read_wallet(session, wallet_id)
+                if wallet is not None:
+                    raise WalletAlreadyExistException()
                 wallet = await crud_wallet.create_wallet_by_id(session, wallet_id, initial_balance)
                 return wallet
 
@@ -74,6 +86,9 @@ class UnsupportedOperationException(Exception):
 class UnrecognizedWalletId(Exception):
     pass
 
+
+class WalletAlreadyExistException(Exception):
+    pass
 
 async def get_wallet_service(
     db_conn_manager: DBConnectionManager = Depends(DBConnectionManager),

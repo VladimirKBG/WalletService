@@ -12,7 +12,8 @@ from app.services.wallet_service import (
     get_wallet_service,
     InsufficientFundsException,
     UnsupportedOperationException,
-    UnrecognizedWalletId
+    UnrecognizedWalletId,
+    WalletAlreadyExistException,
 )
 
 
@@ -43,6 +44,24 @@ async def apply_operation(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Wallet with id={wallet_id} not found.")
     else:
         return OperationRead.model_validate(operation)
+
+
+@router.get(
+    "/wallets/{wallet_id}/operation",
+    response_model=List[OperationRead],
+    status_code=status.HTTP_200_OK,
+    summary=f"Get all operations of specified wallet.",
+)
+async def apply_operation(
+        wallet_id: UUID,
+        service: Annotated[WalletService, Depends(get_wallet_service)]
+) -> List[OperationRead]:
+    try:
+        ops = await service.get_all_operations_by_wallet_id(wallet_id)
+    except UnrecognizedWalletId:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Wallet's root not found.")
+    else:
+        return [OperationRead.model_validate(op) for op in ops]
 
 
 @router.get(
@@ -90,5 +109,9 @@ async def get_wallet_by_id(
         w: WalletCreate,
         service: Annotated[WalletService, Depends(get_wallet_service)],
 ) -> WalletRead:
-    wallet = await service.create_wallet_by_id(w.id, w.balance)
-    return WalletRead.model_validate(wallet)
+    try:
+        wallet = await service.create_wallet_by_id(w.id, w.balance)
+    except WalletAlreadyExistException:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Wallet with id={w.id} is already exist.")
+    else:
+        return WalletRead.model_validate(wallet)
