@@ -18,16 +18,16 @@
 ## Запуск через Docker compose
 ### Запуск в тестовом режиме
 При помощи команды из корня проекта:
-
+```bash
 docker compose -f docker-compose.common.yml -f docker-compose.test.yml up --build
-
+```
 При тестовом запуске прогоняются тесты из папки тест на тестовой бд.
 
 ### Запуск в рабочем режиме:
 При помощи команды из корня проекта:
-
+```bash
 docker compose -f docker-compose.common.yml -f docker-compose.prod.yml up --build
-
+```
 При первом запуске необходимо установить флаг RUN_MIGRATIONS: True 
 в файле docker-compose.prod.yml для создания таблиц в бд. 
 При запуске приложение слушает http://localhost:8000
