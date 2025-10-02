@@ -3,6 +3,7 @@ from decimal import Decimal
 from typing import List
 
 from fastapi import Depends
+from sqlalchemy.exc import IntegrityError
 
 from app.db.base import DBConnectionManager
 from app.models.enums import OperationType
@@ -68,10 +69,10 @@ class WalletService:
     async def create_wallet_by_id(self, wallet_id: UUID, initial_balance: Decimal) -> Wallet:
         async with await self.db_connection_manager.get_session() as session:
             async with session.begin():
-                wallet = await crud_wallet.read_wallet(session, wallet_id)
-                if wallet is not None:
+                try:
+                    wallet = await crud_wallet.create_wallet_by_id(session, wallet_id, initial_balance)
+                except IntegrityError:
                     raise WalletAlreadyExistException()
-                wallet = await crud_wallet.create_wallet_by_id(session, wallet_id, initial_balance)
                 return wallet
 
 
