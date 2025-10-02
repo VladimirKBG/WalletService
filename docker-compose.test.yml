@@ -38,3 +38,6 @@ services:
     volumes:
       - ./:/app
     command: ["bash", "-lc", "pytest -q tests --maxfail=1"]
+
+volumes:
+  test_db_data:
